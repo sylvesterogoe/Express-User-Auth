@@ -40,12 +40,6 @@ authRoute.post('/login', async (req, res) => {
     if (!isValidPass) return res.status(400).send("Password is incorrect");
 
     res.send("Verification sucessful");
-    try{
-        const savedUser = await user.save();
-        res.send(savedUser);
-    }catch(err){
-        res.status(400).send(err);
-    }
 });
 
 export default authRoute;

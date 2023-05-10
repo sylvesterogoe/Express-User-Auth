@@ -1,5 +1,6 @@
 import express from 'express';
 import bcrypt from 'bcryptjs';
+import jwt from 'jsonwebtoken'
 import User from '../models/user.js';
 import { registerValidation, loginValidation } from '../validations/validation.js';
 
@@ -39,7 +40,8 @@ authRoute.post('/login', async (req, res) => {
     const isValidPass = await bcrypt.compare(req.body.password, user.password);
     if (!isValidPass) return res.status(400).send("Password is incorrect");
 
-    res.send("Verification sucessful");
+    const token = jwt.sign({_id: user._id}, process.env.AUTH-TOKEN, {expiresIn: "7d"})
+    res.header("auth-token", token).send("Verification sucessful");
 });
 
 export default authRoute;

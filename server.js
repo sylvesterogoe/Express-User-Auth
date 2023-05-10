@@ -1,12 +1,15 @@
 import express from 'express';
 import mongoose from 'mongoose';
 import dotenv from 'dotenv';
+import homeRoute from './routes/home.js'
 import authRoute from './routes/auth.js';
 
 const app = express();
 dotenv.config();
 
 app.use(express.json());
+
+app.use('/', homeRoute);
 app.use('/api/user', authRoute);
 
 const PORT = parseInt(process.env.PORT);
